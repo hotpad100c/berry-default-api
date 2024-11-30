@@ -1,0 +1,74 @@
+{
+    "packages": {
+        "main": {
+            "dep": [ "download_berry" ],
+            "cps": [
+                ".cache/client.jar",
+                ".cache/libs/",
+                ".cache/berry/",
+                ".cache/bundled/"
+            ],
+            "source": "main",
+            "manifest": "main",
+            "extras": [
+                {
+                    "source": "src/resources/",
+                    "destination": ""
+                }
+            ]
+        }
+    },
+    "runs": {
+        "download_manifest": {
+            "function": "download_manifest",
+            "repeat_everytime": false
+        },
+        "download_berry": {
+            "function": "download_berry",
+            "repeat_everytime": true
+        },
+        "download_minecraft": {
+            "dep": [ "download_manifest" ],
+            "function": "download_minecraft",
+            "repeat_everytime": false
+        },
+        "deobfuscate": {
+            "dep": [ "download_minecraft" ],
+            "function": "deobfuscate",
+            "repeat_everytime": false
+        },
+        "download_dependencies": {
+            "dep": [ "download_minecraft" ],
+            "function": "download_dependencies",
+            "repeat_everytime": false
+        },
+        "setup_vscode": {
+            "dep": [
+                "download_berry",
+                "download_minecraft",
+                "deobfuscate",
+                "download_dependencies"
+            ],
+            "function": "setup_vscode",
+            "repeat_everytime": false
+        },
+        "download_assets": {
+            "dep": [
+                "download_minecraft"
+            ],
+            "function": "download_assets",
+            "repeat_everytime": false
+        },
+        "run_minecraft": {
+            "dep": [
+                "main",
+                "download_minecraft",
+                "deobfuscate",
+                "download_dependencies",
+                "download_assets"
+            ],
+            "function": "run_minecraft",
+            "repeat_everytime": false
+        }
+    }
+}

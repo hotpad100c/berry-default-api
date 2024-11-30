@@ -1,0 +1,9 @@
+build/
+.vscode/
+output/
+run/
+.cache/
+__pycache__/
+*.class
+*.iml
+.idea/
