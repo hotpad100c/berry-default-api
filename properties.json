@@ -1,5 +1,5 @@
 {
-    "berry_version": "0.0.0+2024113001",
+    "berry_version": "0.0.0+2024120103",
     "berry_repo": "https://azfs.pages.dev/berry-dist/{version}/{jarname}.jar",
     "minecraft_version": "1.21.3"
 }

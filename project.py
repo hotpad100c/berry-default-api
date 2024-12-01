@@ -48,6 +48,15 @@ MANIFEST_LOCATION = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.
 def download_manifest (projectjson, properties):
     download_resource (MANIFEST_LOCATION, 'version_manifest.json', False)
 
+def parsemodbundle (loc):
+    zipf = zipfile.ZipFile (loc)
+    try:
+        bf = zipf.open ('META-INF/bundled_jars', 'r')
+        for i in bf:
+            i = i.strip () .decode ()
+            zipf.extract (i, '.cache/')
+    except Exception: pass
+
 # Download BML
 def download_berry (projectjson, properties):
     if not os.path.exists ('.cache'): os.mkdir ('.cache')
@@ -75,10 +84,7 @@ def download_berry (projectjson, properties):
     # Hack impl now
     if not os.path.exists ('.cache/bundled'): os.mkdir ('.cache/bundled')
     for i in os.listdir ('.cache/bundled'): os.remove ('.cache/bundled/' + i)
-    zipf = zipfile.ZipFile ('.cache/berry/builtins.jar')
-    bundles = ['asm-analysis-9.7.1.jar', 'asm-commons-9.7.1.jar', 'asm-9.7.1.jar', 'sponge-mixin-0.15.4+mixin.0.8.7.jar', 'asm-tree-9.7.1.jar', 'asm-util-9.7.1.jar',
-               'javax.annotation-api-1.3.2.jar', 'annotations-26.0.1.jar', 'mixinextras-common-0.4.1.jar', 'org.sat4j.core-2.3.1.jar', 'org.sat4j.pb-2.3.1.jar']
-    for b in bundles: zipf.extract ('bundled/' + b, '.cache/')
+    parsemodbundle ('.cache/berry/builtins.jar')
 
 # Download Minecraft
 def download_minecraft (projectjson, properties):
@@ -100,6 +106,18 @@ def download_minecraft (projectjson, properties):
     download_resource (cldl ['url'], 'client_official.jar', True, cldl ['sha1'])
     if not os.path.exists ('.cache/game'): os.mkdir ('.cache/game')
     if not os.path.exists ('.cache/game/mods'): os.mkdir ('.cache/game/mods')
+    # Mojang ships ASM 9.3, but we need higher versions.
+    libs = cljson ['libraries']
+    for i in range (len (libs)):
+        if libs [i] ['name'] .startswith ('org.ow2.asm'):
+            libs.pop (i)
+            break
+    # Install BML
+    if '-javaagent:../berry/agent.jar' not in cljson ['arguments'] ['jvm']:
+        cljson ['arguments'] ['jvm'] .append ('-javaagent:../berry/agent.jar')
+    cl = open ('.cache/client.json', 'w')
+    json.dump (cljson, cl)
+    cl.close ()
 
 # Deobfuscate Minecraft
 import mapping
@@ -116,15 +134,6 @@ def deobfuscate (projectjson, properties):
 def download_dependencies (projectjson, properties):
     cl = open ('.cache/client.json')
     cljson = json.load (cl)
-    cl.close ()
-    # Mojang ships ASM 9.3, but we need higher versions.
-    libs = cljson ['libraries']
-    for i in range (len (libs)):
-        if libs [i] ['name'] .startswith ('org.ow2.asm'):
-            libs.pop (i)
-            break
-    cl = open ('.cache/client.json', 'w')
-    json.dump (cljson, cl)
     cl.close ()
     if not os.path.exists ('.cache/libs'): os.mkdir ('.cache/libs')
     for lib in cljson ['libraries']:
@@ -221,7 +230,7 @@ def run_minecraft (projectjson, properties):
         'version_type': 'Berry'
     }
     args = cljson ['arguments']
-    jvmargs = ['-javaagent:../berry/agent.jar']
+    jvmargs = []
     for jvmarg in args ['jvm']:
         if isinstance (jvmarg, str):
             jvmargs.append (re.sub ('\\$\\{([A-Za-z_]+)\\}', lambda m: vars [m.group (1)], jvmarg))
