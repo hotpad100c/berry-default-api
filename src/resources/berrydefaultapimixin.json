@@ -3,6 +3,13 @@
     "minVersion": "0.8",
     "package": "berry.api.mixins",
     "compatibilityLevel": "JAVA_21",
-    "client": [ "BerryClientServiceInitializerMixin" ],
+    "mixins": [
+        "events.LivingJumpMixin",
+        "events.ServerLevelTickMixin",
+        "events.CommandsRegisterMixin"
+    ],
+    "server": [
+        "events.DedicatedServerMixin"
+    ],
     "injectors": { "defaultRequire": 1 }
 }

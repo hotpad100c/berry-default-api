@@ -7,3 +7,6 @@ __pycache__/
 *.class
 *.iml
 .idea/
+build.py
+project_template.py
+mapping.py

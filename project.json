@@ -1,30 +1,61 @@
 {
+    "output_mod": "main",
     "packages": {
         "main": {
-            "dep": [ "download_berry" ],
+            "dep": [ "setup_berry" ],
             "cps": [
                 ".cache/client.jar",
-                ".cache/libs/",
                 ".cache/berry/",
-                ".cache/bundled/"
+                ".cache/bundled/",
+                "~/.berry/libraries/"
             ],
             "source": "main",
             "manifest": "main",
             "extras": [
                 {
-                    "source": "src/resources/",
-                    "destination": ""
+                    "source": "src/resources/berrydefaultapimixin.json",
+                    "destination": "berrydefaultapimixin.json"
+                },
+                {
+                    "source": "src/resources/berry.defaultapi.mod.json",
+                    "destination": "berry.defaultapi.mod.json"
+                }
+            ]
+        },
+        "_test": {
+            "dep": [ "setup_berry", "main" ],
+            "cps": [
+                ".cache/client.jar",
+                ".cache/berry/",
+                ".cache/bundled/",
+                "~/.berry/libraries/",
+                "output/main.jar"
+            ],
+            "source": "test",
+            "extras": [
+                {
+                    "source": "src/resources/berry.apitest.mod.json",
+                    "destination": "berry.mod.json"
+                },
+                {
+                    "source": "src/resources/berryapitestmixin.json",
+                    "destination": "berryapitestmixin.json"
                 }
             ]
         }
     },
     "runs": {
+        "test": {
+            "dep": [ "_test" ],
+            "function": "test",
+            "repeat_everytime": true
+        },
         "download_manifest": {
             "function": "download_manifest",
             "repeat_everytime": false
         },
-        "download_berry": {
-            "function": "download_berry",
+        "setup_berry": {
+            "function": "setup_berry",
             "repeat_everytime": true
         },
         "download_minecraft": {
@@ -44,12 +75,20 @@
         },
         "setup_vscode": {
             "dep": [
-                "download_berry",
                 "download_minecraft",
                 "deobfuscate",
                 "download_dependencies"
             ],
             "function": "setup_vscode",
+            "repeat_everytime": false
+        },
+        "setup_intellij": {
+            "dep": [
+                "download_minecraft",
+                "deobfuscate",
+                "download_dependencies"
+            ],
+            "function": "setup_intellij",
             "repeat_everytime": false
         },
         "download_assets": {
@@ -59,16 +98,32 @@
             "function": "download_assets",
             "repeat_everytime": false
         },
-        "run_minecraft": {
+        "run_client": {
             "dep": [
                 "main",
+                "test",
                 "download_minecraft",
                 "deobfuscate",
                 "download_dependencies",
                 "download_assets"
             ],
-            "function": "run_minecraft",
+            "function": "run_client",
             "repeat_everytime": false
+        },
+        "run_server": {
+            "dep": [
+                "main",
+                "test",
+                "download_minecraft",
+                "deobfuscate",
+                "setup_berry"
+            ],
+            "function": "run_server",
+            "repeat_everytime": false
+        },
+        "ypk": {
+            "dep": [ "main", "test" ],
+            "function": "ypk"
         }
     }
 }

@@ -1,0 +1,7 @@
+{
+    "modid": "apitestmod",
+    "version": "1.0.0",
+    "author": "azure-bluet",
+    "modclass": "berry.apitest.APITestMod",
+    "mixin": "berryapitestmixin.json"
+}
