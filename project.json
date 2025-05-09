@@ -120,10 +120,6 @@
             ],
             "function": "run_server",
             "repeat_everytime": false
-        },
-        "ypk": {
-            "dep": [ "main", "test" ],
-            "function": "ypk"
         }
     }
 }
