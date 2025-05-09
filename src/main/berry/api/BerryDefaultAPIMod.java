@@ -7,7 +7,7 @@ import berry.loader.BerryLoader;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 
-@Mod (modid = "defaultapi", version = "0.1.0")
+@Mod (modid = "defaultapi", version = "0.2.0")
 public class BerryDefaultAPIMod implements BerryMod {
     public BerryDefaultAPIMod () {
         EventBus.MINECRAFT

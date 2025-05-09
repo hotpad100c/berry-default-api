@@ -11,14 +11,13 @@ import com.google.gson.JsonParser;
 import berry.loader.BerryClassTransformer;
 import berry.loader.BerryModInitializer;
 import berry.loader.JarContainer;
-import berry.utils.Graph;
+import berry.utils.StringSorter;
 
 public class BerryDefaultAPI implements BerryModInitializer {
     @Override
-    public void preinit (Graph G, JarContainer jar, String name) {
-        var v = new Graph.Vertex (name);
-        G.addVertex (v);
-        G.addEdge (null, G.getVertices () .get ("berrybuiltins"), v, null);
+    public void preinit (StringSorter sorter, JarContainer jar, String name) {
+        sorter.addValue (name);
+        sorter.addRule ("berrybuiltins", name);
     }
     public void initialize (String[] argv) {
         // Find all mods!

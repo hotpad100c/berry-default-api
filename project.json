@@ -120,6 +120,26 @@
             ],
             "function": "run_server",
             "repeat_everytime": false
+        },
+        "build_resources": {
+            "function": "build_resources",
+            "repeat_everytime": false
+        },
+        "build_datapacks": {
+            "function": "build_datapacks",
+            "repeat_everytime": false
+        },
+        "localdist": {
+            "dep": [
+                "main",
+                "test"
+            ],
+            "function": "localdist",
+            "repeat_everytime": false
         }
+    },
+    "localdist": {
+        "output/main.jar": "bdapi.jar",
+        "output/test.jar": "bdapitest.jar"
     }
 }

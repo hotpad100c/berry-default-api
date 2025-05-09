@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Change the source if you need
-source = 'https://azfs.pages.dev/berry-dist/0.2.0+2025042601/'
+source = 'https://azfs.pages.dev/berry-dist/0.3.0+2025050902/'
 
 li = [
     'build.py',
