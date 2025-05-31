@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import berry.loader.BerryClassTransformer;
+import berry.loader.BerryLoader;
 import berry.loader.BerryModInitializer;
 import berry.loader.JarContainer;
 import berry.utils.StringSorter;
@@ -19,7 +20,11 @@ public class BerryDefaultAPI implements BerryModInitializer {
         sorter.addValue (name);
         sorter.addRule ("berrybuiltins", name);
     }
+    @Override
     public void initialize (String[] argv) {
+        BerryLoader.preloaders.add (cl -> this.preload ());
+    }
+    public void preload () {
         // Find all mods!
         new BerryAPIModContainer (
             "berry.api.BerryDefaultAPIMod",

@@ -1,7 +1,7 @@
 {
-    "modid": "apitestmod",
-    "version": "0.2.0",
+    "modid": "defaultapi",
+    "version": "0.3.0",
     "author": "azure-bluet",
-    "modclass": "berry.apitest.APITestMod",
+    "modclass": "berry.api.BerryDefaultAPIMod",
     "mixin": "berrydefaultapimixin.json"
 }
