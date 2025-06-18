@@ -6,8 +6,8 @@
             "cps": [
                 ".cache/client.jar",
                 ".cache/berry/",
-                ".cache/bundled/",
-                "~/.berry/libraries/"
+                "${CPS_GAME_LIBS}",
+                "extralibs/"
             ],
             "source": "main",
             "manifest": "main",
@@ -27,7 +27,6 @@
             "cps": [
                 ".cache/client.jar",
                 ".cache/berry/",
-                ".cache/bundled/",
                 "~/.berry/libraries/",
                 "output/main.jar"
             ],

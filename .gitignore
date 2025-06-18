@@ -11,3 +11,4 @@ build.py
 project_template.py
 mapping.py
 dist.py.json
+extralibs/
