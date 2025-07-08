@@ -1,6 +1,9 @@
 package berry.api.eventbus;
 
 public abstract class MultiEvent {
+    public abstract class EventPhase{
+        
+    }
     protected boolean cancelled = false;
     public boolean cancellable (){
         return true;
