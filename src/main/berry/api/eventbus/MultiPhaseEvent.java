@@ -2,30 +2,15 @@ package berry.api.eventbus;
 
 import berry.api.eventbus.Event;
 
-public abstract class MultiPhaseEvent extends Event{
-    List<MultiPhaseEvent.Phase> phases = new ArrayList<>();
-    MultiPhaseEvent.Phase currentLhase
-    public abstract class EventPhase{
-        private final cancellable;
-        private final reason;
-        public EventPhase(boolean cancellable,@Nullable string reason){
-            this.cancellable = cancellable;
-            this.reason = reason;
+public interface class MultiPhaseEvent{
+    
+    public record EventPhase(string name, boolean cancellable,@Nullable string reason){
+        public boolean cancelable(){
+            return this.cancellable;
+        }
+        public string whyCantCancel(){
+            return "Cannot cancel event on " + this.name + this.reason == null? "phase!" : "phase because " + this.reason +" !"
         }
     }
-    protected boolean cancelled = false;
-    @Override
-    public boolean cancellable (){
-        return true;
-    }
-    public void cancel () {
-        setCancelled (true);
-    }
-    public void setCancelled (boolean c) {
-        if (!this.cancellable () && c) throw new IllegalStateException ("Event cannot be cancelled!");
-        else this.cancelled = c;
-    }
-    public boolean cancelled () {
-        return cancelled;
-    }
+
 }
