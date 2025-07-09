@@ -11,7 +11,7 @@ public interface CancellableEvent {
     default void setCancelled (boolean c) {
         this.cancelled = c;
     }
-    default boolean cancelled () {
+    default boolean isCancelled () {
         return cancelled;
     }
 }
