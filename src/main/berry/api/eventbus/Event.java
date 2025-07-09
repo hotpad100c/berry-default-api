@@ -11,7 +11,7 @@ public abstract class Event {
         if (this instanceof CancellableEvent cancellableEvent) cancellableEvent.setCancelled(true);
         else throw new IllegalStateException(getUncancellableReason());
     }
-    private string getUncancellableReason(){
+    protected string getUncancellableReason(){
         return "Event cannot be cancelled!"
     }
     public boolean cancelled () {
