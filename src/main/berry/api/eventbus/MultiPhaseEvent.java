@@ -1,10 +1,20 @@
 package berry.api.eventbus;
 
-public abstract class MultiEvent {
+import berry.api.eventbus.Event;
+
+public abstract class MultiPhaseEvent extends Event{
+    List<MultiPhaseEvent.Phase> phases = new ArrayList<>();
+    MultiPhaseEvent.Phase currentLhase
     public abstract class EventPhase{
-        
+        private final cancellable;
+        private final reason;
+        public EventPhase(boolean cancellable,@Nullable string reason){
+            this.cancellable = cancellable;
+            this.reason = reason;
+        }
     }
     protected boolean cancelled = false;
+    @Override
     public boolean cancellable (){
         return true;
     }
