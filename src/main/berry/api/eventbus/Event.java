@@ -3,13 +3,10 @@ package berry.api.eventbus;
 public abstract class Event {
     protected boolean cancelled = false;
     public boolean cancellable () {
-        // Cancellable by default, except for post events.
+        //Only cancellable when marked.
         return this instanceof CancellableEvent;
     }
     public boolean cancelled () {
-        if(this instanceof CancellableEvent)
-            return this.cancelled;
-        else
-            return false;
+      return this instanceof CancellableEvent cancellableEvent ? ((cancellableEvent)this).isCancelled():false;
     }
 }
