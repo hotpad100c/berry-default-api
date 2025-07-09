@@ -15,6 +15,6 @@ public abstract class Event {
         return "Event cannot be cancelled!"
     }
     public boolean cancelled () {
-      return (this instanceof CancellableEvent cancellableEvent) ? cancellableEvent.isCancelled():false;
+      return (this instanceof CancellableEvent cancellableEvent && cancellableEvent.isCancelled())
     }
 }
