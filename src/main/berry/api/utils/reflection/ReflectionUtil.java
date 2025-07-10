@@ -1,7 +1,7 @@
 package berry.api.utils.reflection;
 import java.lang.reflect.*;
 
-public class ReflectionUnit {
+public class ReflectionUtil {
 
     /**
      * Parse T from EventListener<T extends Event> 
