@@ -1,6 +1,7 @@
 package berry.api.eventbus;
 
 import berry.api.eventbus.CancellableEvent;
+import berry.api.eventbus.EventBus;
 public abstract class Event {
     protected boolean cancelled = false;
     public boolean cancellable () {
@@ -16,5 +17,9 @@ public abstract class Event {
     }
     public boolean cancelled () {
       return (this instanceof CancellableEvent cancellableEvent && cancellableEvent.isCancelled())
+    }
+    @SuppressWarnings("unchecked")
+    public <T extends Event> void register(EventListener<T> listener) {
+        EventBus.addListener((Class<T>) this.getClass(), listener);
     }
 }
